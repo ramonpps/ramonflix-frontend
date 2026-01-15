@@ -7,13 +7,18 @@ const Navbar = () => {
   const [activeMenu, setActiveMenu] = useState(null);
   const [loadingRandom, setLoadingRandom] = useState(false);
 
-  // Gêneros para o submenu de Recomendação
+  // Lista de Gêneros
   const genres = [
-    { label: 'Ação', value: 'Action' }, { label: 'Aventura', value: 'Adventure' },
-    { label: 'Animação', value: 'Animation' }, { label: 'Comédia', value: 'Comedy' },
-    { label: 'Policial', value: 'Crime' }, { label: 'Drama', value: 'Drama' },
-    { label: 'Fantasia', value: 'Fantasy' }, { label: 'Terror', value: 'Horror' },
-    { label: 'Ficção', value: 'Sci-Fi' }, { label: 'Romance', value: 'Romance' }
+    { label: 'Cristãos e Bíblicos', value: 'Religious' },
+    { label: 'Ação', value: 'Action' }, 
+    { label: 'Aventura', value: 'Adventure' },
+    { label: 'Animação', value: 'Animation' }, 
+    { label: 'Comédia', value: 'Comedy' },
+    { label: 'Policial', value: 'Crime' }, 
+    { label: 'Drama', value: 'Drama' },
+    { label: 'Fantasia', value: 'Fantasy' }, 
+    { label: 'Terror', value: 'Horror' },
+    { label: 'Ficção', value: 'Sci-Fi' }
   ];
 
   const handleRandomGenre = async (genre) => {
@@ -50,58 +55,40 @@ const Navbar = () => {
       }}
       onMouseLeave={() => setActiveMenu(null)}
     >
-      {/* ESQUERDA: LOGO */}
-      <div 
-        onClick={() => navigate('/')} 
-        style={{ color: '#e50914', fontSize: '28px', fontWeight: 'bold', cursor: 'pointer', textShadow: '0 1px 2px black', zIndex: 1002 }}
-      >
+      <div onClick={() => navigate('/')} style={{ color: '#e50914', fontSize: '28px', fontWeight: 'bold', cursor: 'pointer', textShadow: '0 1px 2px black', zIndex: 1002 }}>
         Netflix do Ramon
       </div>
 
-      {/* CENTRO: MENU (Posicionamento Absoluto para garantir centro exato) */}
-      <div style={{ 
-        position: 'absolute', left: '50%', transform: 'translateX(-50%)', 
-        display: 'flex', gap: '30px', zIndex: 1002 
-      }}>
+      <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '30px', zIndex: 1002 }}>
         {menuItems.map((item, idx) => (
-          <div 
-            key={idx}
-            onMouseEnter={() => setActiveMenu(item.id || null)}
-            onClick={item.action}
-            style={{ 
-              color: activeMenu === item.id ? 'white' : '#e5e5e5', 
-              fontSize: '15px', cursor: 'pointer', fontWeight: activeMenu === item.id ? 'bold' : 'normal',
-              textShadow: '0 1px 2px black', transition: 'color 0.2s'
-            }}
-          >
+          <div key={idx} onMouseEnter={() => setActiveMenu(item.id || null)} onClick={item.action}
+            style={{ color: activeMenu === item.id ? 'white' : '#e5e5e5', fontSize: '15px', cursor: 'pointer', fontWeight: activeMenu === item.id ? 'bold' : 'normal', textShadow: '0 1px 2px black', transition: 'color 0.2s' }}>
             {item.label}
           </div>
         ))}
       </div>
 
-      {/* DIREITA: USUÁRIO */}
       <div style={{ zIndex: 1002 }}>
         <div style={{ width: '32px', height: '32px', borderRadius: '4px', background: '#333', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
           <span style={{ fontSize: '18px' }}>👤</span>
         </div>
       </div>
 
-      {/* SUBMENU FLUTUANTE */}
       {activeMenu === 'recommendation' && (
         <div style={{
             position: 'absolute', top: '70px', left: 0, width: '100%', background: 'rgba(0, 0, 0, 0.95)',
             borderTop: '2px solid #e50914', padding: '30px 0', display: 'flex', justifyContent: 'center',
-            gap: '15px', animation: 'slideDown 0.2s ease-out', zIndex: 1001, flexWrap: 'wrap'
+            gap: '12px', animation: 'slideDown 0.2s ease-out', zIndex: 1001, flexWrap: 'wrap'
           }}
           onMouseEnter={() => setActiveMenu('recommendation')}
         >
           {loadingRandom ? (
-            <span style={{color: 'white'}}>Sorteando...</span>
+            <span style={{color: 'white'}}>Sorteando filme...</span>
           ) : (
             genres.map((g) => (
               <div key={g.value} onClick={() => handleRandomGenre(g.value)}
                 style={{
-                  color: '#aaa', fontSize: '16px', cursor: 'pointer', padding: '8px 16px',
+                  color: '#aaa', fontSize: '15px', cursor: 'pointer', padding: '8px 16px',
                   border: '1px solid #333', borderRadius: '20px', transition: 'all 0.2s'
                 }}
                 onMouseOver={(e) => { e.currentTarget.style.color='white'; e.currentTarget.style.borderColor='white'; }}
