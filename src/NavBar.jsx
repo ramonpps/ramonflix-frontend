@@ -6,7 +6,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [activeMenu, setActiveMenu] = useState(null);
   const [loadingRandom, setLoadingRandom] = useState(false);
-  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   const genres = [
     { label: 'Cristãos e Bíblicos', value: 'Religious' },
@@ -25,7 +24,7 @@ const Navbar = () => {
     if (loadingRandom) return;
     setLoadingRandom(true);
     try {
-      const res = await axios.get(`${API_BASE_URL}/random`, { params: { genre } });
+      const res = await axios.get('http://localhost:3000/random', { params: { genre } });
       const movie = res.data;
       if (movie && movie.imdb_id) {
         navigate(`/watch?imdbId=${movie.imdb_id}&type=movie&title_hint=${encodeURIComponent(movie.title)}`);
@@ -55,10 +54,12 @@ const Navbar = () => {
       }}
       onMouseLeave={() => setActiveMenu(null)}
     >
+      {/* --- LADO ESQUERDO: NOME DA MARCA ALTERADO --- */}
       <div onClick={() => navigate('/')} style={{ color: '#e50914', fontSize: '28px', fontWeight: 'bold', cursor: 'pointer', textShadow: '0 1px 2px black', zIndex: 1002 }}>
-        Netflix do Ramon
+        RamonFlix
       </div>
 
+      {/* --- CENTRO: MENU --- */}
       <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '30px', zIndex: 1002 }}>
         {menuItems.map((item, idx) => (
           <div key={idx} onMouseEnter={() => setActiveMenu(item.id || null)} onClick={item.action}
@@ -68,12 +69,28 @@ const Navbar = () => {
         ))}
       </div>
 
-      <div style={{ zIndex: 1002 }}>
+      {/* --- LADO DIREITO: DISCLAIMER + ÍCONE --- */}
+      <div style={{ zIndex: 1002, display: 'flex', alignItems: 'center', gap: '20px' }}>
+        {/* Disclaimer Legal */}
+        <div style={{ 
+            fontSize: '11px', 
+            color: '#777', 
+            textAlign: 'right', 
+            maxWidth: '200px',
+            lineHeight: '1.2',
+            borderRight: '1px solid #333',
+            paddingRight: '15px'
+          }}>
+          Projeto educacional para portfólio. Sem fins comerciais ou afiliação com serviços de streaming.
+        </div>
+
+        {/* Ícone de Usuário */}
         <div style={{ width: '32px', height: '32px', borderRadius: '4px', background: '#333', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
           <span style={{ fontSize: '18px' }}>👤</span>
         </div>
       </div>
 
+      {/* Dropdown de Recomendação */}
       {activeMenu === 'recommendation' && (
         <div style={{
             position: 'absolute', top: '70px', left: 0, width: '100%', background: '#141414',
