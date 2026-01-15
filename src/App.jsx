@@ -1,23 +1,23 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-// Importando as páginas
 import HomePage from './pages/HomePage';
+import SeriesPage from './pages/SeriesPage'; // Nova
 import SearchPage from './pages/SearchPage';
 import WatchPage from './pages/WatchPage';
+import WatchSeriesPage from './pages/WatchSeriesPage'; // Nova
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        {/* Rota Raiz (Home estilo Netflix) */}
         <Route path="/" element={<HomePage />} />
-        
-        {/* Rota de Busca (Página dedicada) */}
+        <Route path="/series" element={<SeriesPage />} />
         <Route path="/search" element={<SearchPage />} />
         
-        {/* Rota do Player (Onde assiste o filme) */}
+        {/* Filmes usam WatchPage, Séries usam WatchSeriesPage */}
         <Route path="/watch" element={<WatchPage />} />
+        <Route path="/watch-series" element={<WatchSeriesPage />} />
       </Routes>
     </Router>
   );

@@ -2,10 +2,10 @@ import React from 'react';
 
 const VideoPlayer = ({ magnet, subtitles = [] }) => {
   // Endereço do seu microsserviço Node.js
-  const STREAM_ENGINE = "http://localhost:8080"; 
+  const STREAM_BASE_URL = import.meta.env.VITE_STREAM_URL || "http://localhost:8080";
   
   // Codifica o magnet para passar na URL com segurança
-  const streamUrl = `${STREAM_ENGINE}/stream?magnet=${encodeURIComponent(magnet)}`;
+  const streamUrl = `${STREAM_BASE_URL}/stream?magnet=${encodeURIComponent(magnet)}`;
 
   return (
     <div style={{ marginTop: '20px', background: 'black', padding: '10px' }}>

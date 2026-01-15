@@ -6,8 +6,8 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [activeMenu, setActiveMenu] = useState(null);
   const [loadingRandom, setLoadingRandom] = useState(false);
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-  // Lista de Gêneros
   const genres = [
     { label: 'Cristãos e Bíblicos', value: 'Religious' },
     { label: 'Ação', value: 'Action' }, 
@@ -25,7 +25,7 @@ const Navbar = () => {
     if (loadingRandom) return;
     setLoadingRandom(true);
     try {
-      const res = await axios.get('http://localhost:3000/random', { params: { genre } });
+      const res = await axios.get(`${API_BASE_URL}/random`, { params: { genre } });
       const movie = res.data;
       if (movie && movie.imdb_id) {
         navigate(`/watch?imdbId=${movie.imdb_id}&type=movie&title_hint=${encodeURIComponent(movie.title)}`);
@@ -40,7 +40,7 @@ const Navbar = () => {
 
   const menuItems = [
     { label: 'Filmes', action: () => navigate('/') },
-    { label: 'Séries', action: () => navigate('/') },
+    { label: 'Séries', action: () => navigate('/series') },
     { label: 'Buscar', action: () => navigate('/search') },
     { label: 'Recomendação', id: 'recommendation' },
   ];
@@ -49,9 +49,9 @@ const Navbar = () => {
     <div 
       style={{ 
         position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000, 
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.95) 10%, rgba(0,0,0,0) 100%)',
+        background: '#141414', 
         padding: '20px 4%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        height: '70px'
+        height: '70px', borderBottom: '1px solid #333'
       }}
       onMouseLeave={() => setActiveMenu(null)}
     >
@@ -62,7 +62,7 @@ const Navbar = () => {
       <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '30px', zIndex: 1002 }}>
         {menuItems.map((item, idx) => (
           <div key={idx} onMouseEnter={() => setActiveMenu(item.id || null)} onClick={item.action}
-            style={{ color: activeMenu === item.id ? 'white' : '#e5e5e5', fontSize: '15px', cursor: 'pointer', fontWeight: activeMenu === item.id ? 'bold' : 'normal', textShadow: '0 1px 2px black', transition: 'color 0.2s' }}>
+            style={{ color: activeMenu === item.id ? 'white' : '#e5e5e5', fontSize: '15px', cursor: 'pointer', fontWeight: activeMenu === item.id ? 'bold' : 'normal', transition: 'color 0.2s' }}>
             {item.label}
           </div>
         ))}
@@ -76,9 +76,10 @@ const Navbar = () => {
 
       {activeMenu === 'recommendation' && (
         <div style={{
-            position: 'absolute', top: '70px', left: 0, width: '100%', background: 'rgba(0, 0, 0, 0.95)',
+            position: 'absolute', top: '70px', left: 0, width: '100%', background: '#141414',
             borderTop: '2px solid #e50914', padding: '30px 0', display: 'flex', justifyContent: 'center',
-            gap: '12px', animation: 'slideDown 0.2s ease-out', zIndex: 1001, flexWrap: 'wrap'
+            gap: '12px', animation: 'slideDown 0.2s ease-out', zIndex: 1001, flexWrap: 'wrap',
+            borderBottom: '1px solid #333'
           }}
           onMouseEnter={() => setActiveMenu('recommendation')}
         >

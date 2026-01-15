@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../Navbar';
 
-const HomePage = () => {
+const SeriesPage = () => {
   const [data, setData] = useState({ hero: null, catalogs: {} });
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -12,10 +12,10 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`${API_BASE_URL}/home`);
+        const res = await axios.get(`${API_BASE_URL}/series`);
         setData(res.data);
       } catch (err) {
-        console.error("Erro Home", err);
+        console.error("Erro Series", err);
       } finally {
         setLoading(false);
       }
@@ -32,7 +32,7 @@ const HomePage = () => {
           {movies.map((m) => (
             <div 
               key={m.imdb_id} 
-              onClick={() => navigate(`/watch?imdbId=${m.imdb_id}&type=movie&title_hint=${encodeURIComponent(m.title)}`)}
+              onClick={() => navigate(`/watch-series?imdbId=${m.imdb_id}&title_hint=${encodeURIComponent(m.title)}`)}
               style={{ flex: '0 0 auto', width: '200px', cursor: 'pointer', transition: 'transform 0.3s' }}
               onMouseOver={e => e.currentTarget.style.transform = 'scale(1.03)'}
               onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}
@@ -65,63 +65,39 @@ const HomePage = () => {
   return (
     <div style={{ minHeight: '100vh', background: '#141414', paddingBottom: '50px', overflowX: 'hidden' }}>
       <Navbar />
-
-      {/* HERO SECTION DINÂMICA */}
       {hero && (
         <div style={{ height: '90vh', position: 'relative', marginBottom: '-60px' }}>
-          {/* Background Imagem */}
           <div style={{
             position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
             backgroundImage: `url(${hero.poster?.replace('w200','original') || ''})`,
             backgroundSize: 'cover', backgroundPosition: 'center 20%',
             maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(20,20,20,0) 100%)',
-            WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(20,20,20,0) 100%)',
-            zIndex: 1
+            WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(20,20,20,0) 100%)', zIndex: 1
           }}></div>
-          
-          {/* Sombra Lateral */}
           <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(to right, #141414 0%, transparent 50%)', zIndex: 2 }}></div>
-
-          {/* CONTEÚDO DO HERO (TEXTO E BOTÕES) */}
-          {/* CORREÇÃO AQUI: zIndex: 20 garante que fique ACIMA dos carrosséis */}
           <div style={{ position: 'absolute', bottom: '35%', left: '4%', maxWidth: '700px', zIndex: 20 }}>
-            <h1 style={{ color: 'white', fontSize: '4.5rem', textShadow: '2px 2px 10px rgba(0,0,0,0.8)', margin: 0, lineHeight: '1', fontFamily: 'Impact, sans-serif', textTransform: 'uppercase' }}>
-              {hero.title}
-            </h1>
+            <h1 style={{ color: 'white', fontSize: '4.5rem', textShadow: '2px 2px 10px rgba(0,0,0,0.8)', margin: 0, lineHeight: '1', fontFamily: 'Impact, sans-serif', textTransform: 'uppercase' }}>{hero.title}</h1>
              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '20px 0', color: '#ccc', fontWeight: 'bold' }}>
-                <span style={{ color: '#46d369' }}>Recomendado ({hero.rating})</span>
-                <span>•</span>
-                <span>Filme</span>
+                <span style={{ color: '#46d369' }}>Destaque ({hero.rating})</span><span>•</span><span>Série</span>
              </div>
             <div style={{ display: 'flex', gap: '15px' }}>
-               <button 
-                 onClick={() => {
-                    console.log("Navegando para:", hero.title);
-                    navigate(`/watch?imdbId=${hero.imdb_id}&type=movie&title_hint=${encodeURIComponent(hero.title)}`);
-                 }}
-                 style={{ padding: '15px 40px', fontSize: '1.4rem', background: 'white', color: 'black', border: 'none', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px', transition: 'opacity 0.2s' }}
-                 onMouseOver={(e) => e.currentTarget.style.opacity = '0.8'} onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
-               >
-                 ▶ Ver filme
+               <button onClick={() => navigate(`/watch-series?imdbId=${hero.imdb_id}&title_hint=${encodeURIComponent(hero.title)}`)} style={{ padding: '15px 40px', fontSize: '1.4rem', background: 'white', color: 'black', border: 'none', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                 ▶ Assistir
                </button>
             </div>
           </div>
         </div>
       )}
-
-      {/* CARROSSEIS */}
       <div style={{ position: 'relative', zIndex: 10 }}>
-        {catalogs['Melhores Avaliados'] && <MovieRow title="Melhores Avaliados" movies={catalogs['Melhores Avaliados']} />}
-        
+        {catalogs['Melhores Avaliadas'] && <MovieRow title="Melhores Avaliadas" movies={catalogs['Melhores Avaliadas']} />}
         {Object.keys(catalogs).map(key => {
-          if (key === 'Melhores Avaliados') return null;
+          if (key === 'Melhores Avaliadas') return null;
           return <MovieRow key={key} title={key} movies={catalogs[key]} />;
         })}
       </div>
-
       <style>{`.hide-scrollbar::-webkit-scrollbar { display: none; }`}</style>
     </div>
   );
 };
 
-export default HomePage;
+export default SeriesPage;

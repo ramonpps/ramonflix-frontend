@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Navbar from '../NavBar';
+import Navbar from '../Navbar';
 
 const SearchPage = () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -15,7 +16,7 @@ const SearchPage = () => {
     setLoading(true);
     setResults([]);
     try {
-      const res = await axios.get('http://localhost:3000/search', { params: { q: query } });
+      const res = await axios.get(`${API_BASE_URL}/search`, { params: { q: query } });
       setResults(res.data.results || []);
     } catch {
       alert("Erro ao buscar.");

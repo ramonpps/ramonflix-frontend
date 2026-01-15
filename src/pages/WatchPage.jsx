@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Navbar from '../NavBar';
+import Navbar from '../Navbar';
 
-const STREAM_ENGINE_URL = "http://localhost:8080";
+const STREAM_BASE_URL = import.meta.env.VITE_STREAM_URL || "http://localhost:8080";
 
 const WatchPage = () => {
   const [searchParams] = useSearchParams();
@@ -16,6 +16,7 @@ const WatchPage = () => {
   const [activeList, setActiveList] = useState([]);
   const [sidebarHover, setSidebarHover] = useState(false);
   const [videoError, setVideoError] = useState(false);
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   const imdbId = searchParams.get('imdbId');
   const type = searchParams.get('type');
@@ -25,7 +26,7 @@ const WatchPage = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await axios.get('http://localhost:3000/streams', {
+        const res = await axios.get(`${API_BASE_URL}/streams`, {
           params: { imdb_id: imdbId, type, season: '1', episode: '1', title_hint: titleHint }
         });
         setData(res.data);
@@ -108,7 +109,7 @@ const WatchPage = () => {
 
         <div style={{width:'100%', height:'100%', display:'flex', justifyContent:'center', alignItems:'center'}}>
             <video key={selectedStream.infoHash} controls autoPlay width="100%" height="100%" crossOrigin="anonymous" onError={() => setVideoError(true)}>
-                <source src={`${STREAM_ENGINE_URL}/stream?magnet=${encodeURIComponent(selectedStream.magnet)}`} type="video/mp4" />
+                <source src={`${STREAM_BASE_URL}/stream?magnet=${encodeURIComponent(selectedStream.magnet)}`} type="video/mp4" />
             </video>
         </div>
 
