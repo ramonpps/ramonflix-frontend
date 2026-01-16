@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Navbar from '../components/Navbar';
+import Navbar from '../Navbar';
 import { API_BASE_URL, STREAM_ENGINE_URL } from '../config'; // Certifique-se de ter o config.js
 
 const WatchPage = () => {
