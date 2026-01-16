@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Navbar from '../Navbar';
+import Navbar from '../Navbar_temp';
 
 const STREAM_BASE_URL = import.meta.env.VITE_STREAM_URL || "http://localhost:8080";
 

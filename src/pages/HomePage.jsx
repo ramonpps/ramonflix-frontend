@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Navbar from '../Navbar';
+import Navbar from '../Navbar_temp';
 
 const HomePage = () => {
   const [data, setData] = useState({ hero: null, catalogs: {} });
