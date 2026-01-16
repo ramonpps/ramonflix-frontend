@@ -78,4 +78,4 @@ Este frontend é apenas uma parte do ecossistema RamonFlix:
 3.  **Stream Engine (Node.js):** Microsserviço responsável pelo processamento do protocolo WebTorrent e entrega do stream de vídeo.
 
 ---
-Desenvolvido por [Seu Nome]
+Desenvolvido por Ramon Pedro Pereira Santos
