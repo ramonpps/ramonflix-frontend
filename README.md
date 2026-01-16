@@ -1,75 +1,81 @@
-# React + TypeScript + Vite
+# RamonFlix - Frontend Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este repositório contém a interface de usuário (Client-Side) do projeto RamonFlix, uma plataforma de streaming de vídeo desenvolvida com **React.js**. O projeto foi criado com fins educacionais para demonstrar a implementação de uma arquitetura de streaming descentralizada (P2P) integrada a uma interface moderna e responsiva.
 
-Currently, two official plugins are available:
+O frontend atua como o consumidor final de uma arquitetura de microsserviços, conectando-se a uma API REST (Ruby on Rails) para dados de catálogo e a um serviço de streaming (Node.js) para transmissão de vídeo.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Sobre o Projeto
 
-## React Compiler
+O RamonFlix simula a experiência de usuário de grandes plataformas de streaming, focando em performance e interatividade. Diferente de plataformas tradicionais que hospedam arquivos de vídeo estáticos, este projeto implementa um protocolo de streaming baseado em Magnet Links e WebTorrent, permitindo a distribuição de conteúdo sem a necessidade de grandes servidores de armazenamento centralizado.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+> **Nota Técnica:** Para fins de portfólio e conformidade legal, o sistema opera em "Modo de Demonstração". Ao solicitar a reprodução de qualquer título, o sistema carrega conteúdo licenciado sob Creative Commons (Open Source) para validar a tecnologia de transmissão.
 
-Note: This will impact Vite dev & build performances.
+## Tecnologias Utilizadas
 
-## Expanding the ESLint configuration
+* **Core:** React.js 18
+* **Build Tool:** Vite (para alta performance de desenvolvimento e build)
+* **Roteamento:** React Router Dom v6
+* **Requisições HTTP:** Axios
+* **Player de Vídeo:** HTML5 Video API nativa integrada ao stream engine
+* **Estilização:** CSS Modules / Styled Components
+* **Gerenciamento de Estado:** React Hooks e Context API
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Funcionalidades
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1.  **Catálogo Dinâmico:** Consumo de API para exibição de filmes e séries, incluindo capas, sinopses, elenco e avaliações.
+2.  **Streaming P2P:** Integração com microsserviço de transcoding que converte streams BitTorrent em vídeo compatível com navegadores.
+3.  **Sistema de Busca:** Pesquisa em tempo real de títulos.
+4.  **Interface Responsiva:** Layout adaptável para dispositivos desktop e mobile.
+5.  **Modo Demo Seguro:** Interface informativa que detalha a origem do sinal e status da conexão P2P sem expor conteúdo protegido por direitos autorais.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Pré-requisitos
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Para rodar este projeto localmente, você precisará ter instalado:
+* Node.js (versão 18 ou superior)
+* NPM ou Yarn
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Instalação e Execução
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1.  Clone o repositório:
+    ```bash
+    git clone [https://github.com/SEU_USUARIO/ramonflix-frontend.git](https://github.com/SEU_USUARIO/ramonflix-frontend.git)
+    cd ramonflix-frontend
+    ```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+2.  Instale as dependências:
+    ```bash
+    npm install
+    ```
+
+3.  Configure as variáveis de ambiente:
+    Crie um arquivo `.env` na raiz do projeto e defina as URLs dos serviços de backend (local ou produção):
+
+    ```env
+    VITE_API_URL=http://localhost:3000
+    VITE_STREAM_URL=http://localhost:8080
+    ```
+
+4.  Inicie o servidor de desenvolvimento:
+    ```bash
+    npm run dev
+    ```
+
+A aplicação estará disponível em `http://localhost:5173`.
+
+## Estrutura de Pastas
+
+* `/src/components`: Componentes reutilizáveis (Navbar, Cards, Player).
+* `/src/pages`: Páginas principais da aplicação (Home, Watch, Search).
+* `/src/services`: Configurações do Axios e serviços de API.
+* `/src/context`: Gerenciamento de estado global (se aplicável).
+
+## Arquitetura do Sistema
+
+Este frontend é apenas uma parte do ecossistema RamonFlix:
+
+1.  **Frontend (Este repositório):** Interface do usuário.
+2.  **Backend API (Ruby on Rails):** Gerencia lógica de negócios, metadados e segurança.
+3.  **Stream Engine (Node.js):** Microsserviço responsável pelo processamento do protocolo WebTorrent e entrega do stream de vídeo.
+
+---
+Desenvolvido por [Seu Nome]
