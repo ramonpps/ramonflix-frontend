@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Navbar from '../Navbar_temp';
+import Navbar from '../Navbar';
 
 const SearchPage = () => {
   const [query, setQuery] = useState('');
