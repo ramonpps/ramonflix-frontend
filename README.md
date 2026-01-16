@@ -1,4 +1,5 @@
 # RamonFlix - Frontend Client
+Link para acesso do sistema em produção: https://ramonflix.vercel.app/ <br>Horários entre as 20h e 8h estão sujeitos a maior latência de tráfego
 
 Este repositório contém a interface de usuário (Client-Side) do projeto RamonFlix, uma plataforma de streaming de vídeo desenvolvida com **React.js**. O projeto foi criado com fins educacionais para demonstrar a implementação de uma arquitetura de streaming descentralizada (P2P) integrada a uma interface moderna e responsiva.
 
@@ -8,7 +9,12 @@ O frontend atua como o consumidor final de uma arquitetura de microsserviços, c
 
 O RamonFlix simula a experiência de usuário de grandes plataformas de streaming, focando em performance e interatividade. Diferente de plataformas tradicionais que hospedam arquivos de vídeo estáticos, este projeto implementa um protocolo de streaming baseado em Magnet Links e WebTorrent, permitindo a distribuição de conteúdo sem a necessidade de grandes servidores de armazenamento centralizado.
 
+Frontend: https://github.com/ramonpps/ramonflix-frontend/ <br>
+Backend: https://github.com/ramonpps/ramonflix-backend <br>
+Stream service: https://github.com/ramonpps/ramonflix-stream-service <br>
+
 > **Nota Técnica:** Para fins de portfólio e conformidade legal, o sistema opera em "Modo de Demonstração". Ao solicitar a reprodução de qualquer título, o sistema carrega conteúdo licenciado sob Creative Commons (Open Source) para validar a tecnologia de transmissão.
+
 
 ## Tecnologias Utilizadas
 
